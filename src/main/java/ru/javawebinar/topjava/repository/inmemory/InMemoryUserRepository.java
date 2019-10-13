@@ -13,13 +13,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static ru.javawebinar.topjava.util.UsersUtils.ADMIN;
+import static ru.javawebinar.topjava.util.UsersUtils.TEST_USER;
+
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
-    private AtomicInteger counter = new AtomicInteger(0);
-    private Map<Integer, User> repository = new ConcurrentHashMap<>();
+    private static AtomicInteger counter = new AtomicInteger(1000);
+    private static Map<Integer, User> repository = new ConcurrentHashMap<>();
 
-
+    static {
+        repository.put(1, ADMIN);
+        repository.put(2, TEST_USER);
+    }
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
